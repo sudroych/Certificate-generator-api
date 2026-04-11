@@ -1,0 +1,219 @@
+{
+  "info": {
+    "name": "IBM Certificate Generator API",
+    "description": "REST API for generating IBM Distribution Sector certificates",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Generate Certificate",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"date\": \"2026-04-11\",\n  \"purpose\": \"Completion of Advanced Node.js Course\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-certificate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-certificate"
+          ]
+        },
+        "description": "Generates an IBM Distribution Sector certificate PNG image.\n\nRequired fields:\n- name: Recipient's full name (2-100 characters)\n- date: Certificate date in ISO 8601 format (YYYY-MM-DD)\n- purpose: Purpose or achievement description (5-500 characters)\n\nThe API returns a PNG image that can be saved or displayed."
+      },
+      "response": []
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Check if the API is running and healthy."
+      },
+      "response": [
+        {
+          "name": "Health Check Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"healthy\",\n  \"timestamp\": \"2026-04-11T15:45:00.000Z\",\n  \"version\": \"1.0.0\",\n  \"service\": \"IBM Certificate Generator API\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "API Documentation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api-docs",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api-docs"
+          ]
+        },
+        "description": "Get OpenAPI/Swagger specification for the API."
+      },
+      "response": []
+    },
+    {
+      "name": "Root Endpoint",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        },
+        "description": "Get API information and available endpoints."
+      },
+      "response": []
+    },
+    {
+      "name": "Generate Certificate - Validation Error",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"date\": \"invalid-date\",\n  \"purpose\": \"Too short\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-certificate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-certificate"
+          ]
+        },
+        "description": "Example of a request with validation errors. This will return a 400 Bad Request with error details."
+      },
+      "response": [
+        {
+          "name": "Validation Error Response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"date\": \"invalid-date\",\n  \"purpose\": \"Too short\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generate-certificate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generate-certificate"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Invalid input parameters\",\n    \"details\": [\n      \"Name is required\",\n      \"Date must be in valid ISO 8601 format (YYYY-MM-DD)\",\n      \"Purpose must be between 5 and 500 characters\"\n    ]\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Generate Certificate - Complete Example",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sarah Johnson\",\n  \"date\": \"2026-04-15\",\n  \"purpose\": \"Outstanding Performance in Cloud Architecture and Implementation of Enterprise Solutions\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/generate-certificate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "generate-certificate"
+          ]
+        },
+        "description": "Complete example with a longer purpose text to demonstrate text wrapping."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
