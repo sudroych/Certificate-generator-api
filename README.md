@@ -14,6 +14,7 @@ A REST API service that generates professional IBM Distribution Sector certifica
 
 ## 📋 Table of Contents
 
+- [Quick Start for IBM Consulting Advantage](#quick-start-for-ibm-consulting-advantage)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
@@ -21,6 +22,86 @@ A REST API service that generates professional IBM Distribution Sector certifica
 - [Integration Examples](#integration-examples)
 - [Deployment](#deployment)
 - [Testing](#testing)
+
+## 🚀 Quick Start for IBM Consulting Advantage
+
+**Ready to integrate with IBM Consulting Advantage?** Follow these steps:
+
+### 1. Get Your API Endpoint
+
+If you haven't deployed yet, the API is already live at:
+```
+https://your-certificate-api.onrender.com
+```
+
+Or deploy your own instance following the [Deployment](#deployment) section.
+
+### 2. Test the API
+
+```bash
+curl -X POST https://your-certificate-api.onrender.com/generate-certificate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "date": "2026-04-11",
+    "purpose": "Completion of Advanced Cloud Architecture Training"
+  }' \
+  --output certificate.png
+```
+
+### 3. Import ICA Agent
+
+1. Open IBM Consulting Advantage
+2. Navigate to **Agents** → **Create New Agent**
+3. Name: "Certificate Generator"
+4. Copy the agent code from [IBM_CONSULTING_ADVANTAGE_INTEGRATION.md](IBM_CONSULTING_ADVANTAGE_INTEGRATION.md)
+5. Configure environment variable: `CERTIFICATE_API_URL`
+6. Save and activate
+
+### 4. Create Your First Workflow
+
+```javascript
+// Example: Training Completion Workflow
+const agent = new CertificateGeneratorAgent({
+  apiUrl: process.env.CERTIFICATE_API_URL
+});
+
+const result = await agent.generateCertificate({
+  name: studentName,
+  date: completionDate,
+  purpose: `Completion of ${courseName}`
+});
+
+if (result.success) {
+  // Save to ICA storage and send notification
+  await context.storage.save(result.certificate);
+  await context.notifications.send({
+    to: studentEmail,
+    subject: 'Your Certificate is Ready!',
+    attachments: [{
+      filename: 'certificate.png',
+      content: result.certificate
+    }]
+  });
+}
+```
+
+### 5. Complete Integration Guide
+
+For detailed implementation, workflows, testing, and troubleshooting, see:
+- **[IBM Consulting Advantage Integration Guide](IBM_CONSULTING_ADVANTAGE_INTEGRATION.md)** - Complete ICA integration documentation
+- **[General Integration Guide](INTEGRATION_GUIDE.md)** - Integration with other platforms (GPT, Postman, etc.)
+
+### Key Features for ICA
+
+✅ **Automated Certificate Generation** - Generate certificates from workflows
+✅ **Batch Processing** - Generate multiple certificates at once
+✅ **Input Validation** - Built-in validation before API calls
+✅ **Error Handling** - Comprehensive error handling and retry logic
+✅ **Storage Integration** - Save certificates to ICA storage
+✅ **Email Notifications** - Send certificates via email automatically
+
+---
 
 ## 🛠️ Installation
 
