@@ -33,8 +33,8 @@ A REST API service that generates professional IBM Distribution Sector certifica
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd ibm-certificate-generator
+git clone https://github.com/sudroych/Certificate-generator-api.git
+cd Certificate-generator-api
 ```
 
 2. Install dependencies:
