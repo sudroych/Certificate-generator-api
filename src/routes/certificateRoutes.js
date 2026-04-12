@@ -89,6 +89,74 @@ router.post('/generate-certificate', validateCertificateRequest, async (req, res
 });
 
 /**
+ * POST /generate-certificate-json
+ * Generate an IBM Distribution Sector certificate and return as JSON with base64-encoded image
+ * This endpoint is designed for ICA (IBM Consulting Advantage) integration
+ *
+ * Request body:
+ * {
+ *   "name": "John Doe",
+ *   "date": "2026-04-11",
+ *   "purpose": "Completion of Advanced Node.js Course"
+ * }
+ *
+ * Response: JSON with base64-encoded image
+ */
+router.post('/generate-certificate-json', validateCertificateRequest, async (req, res) => {
+  try {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Invalid input parameters',
+          details: errors.array().map(err => err.msg)
+        }
+      });
+    }
+
+    const { name, date, purpose } = req.body;
+
+    // Generate certificate
+    const imageBuffer = await certificateGenerator.generate({
+      name,
+      date,
+      purpose
+    });
+
+    // Return as JSON with base64-encoded image
+    res.json({
+      success: true,
+      certificate: {
+        image: imageBuffer.toString('base64'),
+        contentType: 'image/png',
+        filename: `certificate-${Date.now()}.png`,
+        size: imageBuffer.length
+      },
+      metadata: {
+        name,
+        date,
+        purpose,
+        generatedAt: new Date().toISOString()
+      }
+    });
+
+  } catch (error) {
+    console.error('Error generating certificate:', error);
+    res.status(500).json({
+      success: false,
+      error: {
+        code: 'GENERATION_ERROR',
+        message: 'Failed to generate certificate',
+        details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+      }
+    });
+  }
+});
+
+/**
  * GET /health
  * Health check endpoint
  */
